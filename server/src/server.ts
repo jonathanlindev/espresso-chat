@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 dotenv.config();
+const PORT = process.env.PORT || 3002;
 
 const app = express();
 const httpServer = createServer(app);
@@ -21,7 +22,7 @@ app.use(express.json());
 
 // Basic route
 app.get('/', (req, res) => {
-  res.json({ message: 'Chat API is running' });
+  res.json({ message: 'Chat API is running on ' + PORT });
 });
 
 // Socket.io connection
@@ -32,8 +33,6 @@ io.on('connection', (socket) => {
     console.log('User disconnected:', socket.id);
   });
 });
-
-const PORT = process.env.PORT || 5175;
 
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
