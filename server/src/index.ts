@@ -10,9 +10,9 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:5173', // Vite default port
-    methods: ['GET', 'POST']
-  }
+    origin: 'http://localhost:5175', // Vite default port
+    methods: ['GET', 'POST'],
+  },
 });
 
 // Middleware
@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5175;
 
 httpServer.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
