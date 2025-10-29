@@ -47,12 +47,8 @@ NODE_ENV=development
 ## Team
 
 Built by 12o-clockCommit aka [pink-fairy-armadillos]
-```
 
-## Step 16: Verify Everything
-
-Your folder structure should now look like this:
-```
+```bash
 chat-app/
 ├── client/
 ├── server/
@@ -60,3 +56,4 @@ chat-app/
 ├── .gitignore
 ├── package.json
 └── README.md
+```
