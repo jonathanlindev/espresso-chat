@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -11,17 +12,26 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:5175', // Vite default port
+    origin: 'http://localhost:5177', // Vite default port
     methods: ['GET', 'POST'],
   },
 });
 
 // Middleware
 app.use(cors());
+/**
+ * handle parsing request body
+ */
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+/**
+ * handle requests for static files
+ */
+app.use(express.static(path.resolve(__dirname, '../client')));
 
 // Basic route
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ message: 'Chat API is running on ' + PORT });
 });
 
