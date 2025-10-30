@@ -10,14 +10,19 @@ const PORT = process.env.PORT || 3002;
 
 const app = express();
 const httpServer = createServer(app);
+/**
+ * Socket.IO is restricted to only localhost:5177
+ */
 const io = new Server(httpServer, {
   cors: {
     origin: 'http://localhost:5177', // Vite default port
+    // origin: "*",
     methods: ['GET', 'POST'],
   },
 });
 
 // Middleware
+// This allows ALL origins to communicate with your Express server
 app.use(cors());
 /**
  * handle parsing request body
@@ -35,10 +40,10 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Chat API is running on ' + PORT });
 });
 
-// Socket.io connection
+// Socket.io connection listen to event connection
 io.on('connection', (socket) => {
+  // new web socket connection
   console.log('User connected:', socket.id);
-
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
   });
