@@ -3,52 +3,30 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "main": "server/src/server.ts",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "main": "server.js",
   "workspaces": [
     "client",
     "server"
   ],
   "scripts": {
-    "client": "npx vite",
-    "start": "npm run server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"vite\" \"tsx watch ./server/src/server.ts\"",
-    "server": "nodemon --exec tsx server/src/server.ts",
-    "build": "vite build"
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "nodemon": "^3.1.10"
+    "concurrently": "^8.2.2"
   },
-  "re`po`sitory": {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/12o-clockCommit/espresso-chat.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/12o-clockCommit/espresso-chat/issues"
   },
-  "homepage": "https://github.com/12o-clockCommit/espresso-chat#readme",
-  "dependencies": {
-    "@types/express": "^5.0.3",
-    "@vitejs/plugin-react-swc": "^4.0.1",
-    "concurrently": "^9.2.1",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "moment": "^2.30.1",
-    "mongodb": "^6.20.0",
-    "mongoose": "^8.18.0",
-    "nodemon": "^3.1.10",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
-    "socket.io": "^4.8.1",
-    "tsx": "^4.20.5",
-    "vite": "^7.1.4"
-  }
+  "homepage": "https://github.com/12o-clockCommit/espresso-chat#readme"
 }
