@@ -1,4 +1,7 @@
-const socket = io('http://localhost:3002');
+// Get the server port from Vite environment variables
+const PORT = 5001;
+
+const socket = io(`http://localhost:${PORT}`);
 
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');

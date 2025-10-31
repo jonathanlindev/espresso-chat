@@ -12,10 +12,10 @@ import {
   userLeave,
   getRoomUsers,
 } from './utils/users';
-dotenv.config();
 
-const PORT = process.env.PORT || 3002;
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
+const PORT = process.env.PORT || 5001;
 const app = express();
 const httpServer = createServer(app);
 /**
