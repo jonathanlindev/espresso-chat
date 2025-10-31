@@ -43,7 +43,9 @@ app.use(express.urlencoded({ extended: true }));
 /**
  * handle requests for static files
  */
-app.use(express.static(path.resolve(__dirname, '../client')));
+
+// For express.static (this serves static files from the client folder)
+app.use(express.static(path.resolve(__dirname, '../../client')));
 
 // Basic route
 app.get('/api', (req, res) => {
