@@ -22,7 +22,7 @@ const Landing = () => {
             <div className="landing-content">
                 {/* Logo/Brand */}
                 <div className="logo">☕☕☕</div>
-                <h1 className="app-title">Expresso Chat</h1>
+                <h1 className="app-title">Espresso Chat</h1>
                 <p className="app-subtitle">Quick chats, instant connections</p>
 
                 {/* Main Options */}
