@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import ChatRoom from './pages/ChatRoom';
 import './styles/index.css';
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        {/* We'll add more routes later */}
+        <Route path="/room/:roomId" element={<ChatRoom />} />
       </Routes>
     </Router>
   );

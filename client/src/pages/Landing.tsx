@@ -5,8 +5,10 @@ const Landing = () => {
     const navigate = useNavigate();
 
     const handleCreateRoom = () => {
-        // call API to create room and navigate to it
+        // generate random room id
+        const roomId = Math.random().toString(36).substring(2, 9);
         console.log('Create anonymous room clicked');
+        navigate(`/room/${roomId}`);
     };
 
     const handleLogin = () => {
