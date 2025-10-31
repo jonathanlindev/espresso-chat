@@ -84,11 +84,11 @@ io.on('connection', (socket) => {
         formatMessage(botName, `${user.username} has joined the chat.`)
       );
 
-      // Send users and room info
-      io.to(user.room).emit('roomUsers', {
-        room: user.room,
-        users: getRoomUsers(user.room),
-      });
+    // Send users and room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room),
+    });
   });
 
   // Listen for chatMessage
@@ -102,7 +102,7 @@ io.on('connection', (socket) => {
 
   // Runs when client disconnects
   socket.on('disconnect', () => {
-    const user = userLeave(socket.id);\
+    const user = userLeave(socket.id);
     console.log('User disconnected:', JSON.stringify(user));
     if (user) {
       // socket.broadcast
@@ -116,7 +116,6 @@ io.on('connection', (socket) => {
         'message',
         formatMessage(botName, `${user.username} has left the chat.`)
       );
-
 
       // Update user side list
       // Send users and room info
