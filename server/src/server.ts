@@ -11,9 +11,9 @@ import {
   getCurrentUser,
   userLeave,
   getRoomUsers,
-} from './utils/users.js';
-import { connectDB } from './config/database.js';
-import Message from './models/Message.js';
+} from './utils/users';
+import { connectDB } from './config/database';
+import Message from './models/Message';
 import moment from 'moment';
 
 dotenv.config();
