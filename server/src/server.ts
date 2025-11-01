@@ -15,13 +15,19 @@ import {
 import { connectDB } from './config/database';
 import Message from './models/Message';
 import moment from 'moment';
+import {
+  uniqueNamesGenerator,
+  adjectives,
+  colors,
+  animals,
+} from 'unique-names-generator';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // connect to mongodb
 connectDB();
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 3002;
 const app = express();
 const httpServer = createServer(app);
 /**
@@ -62,13 +68,15 @@ app.get('/api', (req, res) => {
 io.on('connection', (socket) => {
   console.log('connection: User connected:', socket.id);
 
-  socket.on('joinRoom', async ({ username, room }) => {
+  socket.on('joinRoom', async ({ room }) => {
     // validate input
-    if (!username || !room) {
-      socket.emit('error', { message: 'Username and room are required' });
+    if (!room) {
+      socket.emit('error', { message: 'Room are required' });
       return;
     }
-
+    const username = uniqueNamesGenerator({
+      dictionaries: [adjectives, colors, animals],
+    }); // big_red_donkey
     const user = userJoin(socket.id, username, room);
     console.log('joinRoom: User joined room:', JSON.stringify(user));
 

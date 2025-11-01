@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/12o-clockCommit/espresso-chat#readme",
   "dependencies": {
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "unique-names-generator": "^4.7.1"
   }
 }
