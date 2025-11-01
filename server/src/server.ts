@@ -27,7 +27,9 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 // connect to mongodb
 connectDB();
 
-const PORT = process.env.PORT || 3002;
+// const PORT = process.env.PORT || 3002;
+const PORT = 3002;
+
 const app = express();
 const httpServer = createServer(app);
 /**

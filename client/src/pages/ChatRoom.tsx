@@ -32,15 +32,8 @@ const ChatRoom = () => {
   }, [messages]);
 
   useEffect(() => {
-    // generate guest username
-
-    // connect to socket
+    //   // connect to socket
     const socket = io('http://localhost:3002');
-    socketRef.current = socket;
-
-    // join the room
-    socket.emit('joinRoom', { room: roomId });
-
     // listen for messages
     socket.on('message', (message: Message) => {
       setMessages((prev) => [...prev, message]);
@@ -50,6 +43,11 @@ const ChatRoom = () => {
     socket.on('roomUsers', ({ users }: { room: string; users: User[] }) => {
       setUsers(users);
     });
+
+    socketRef.current = socket;
+
+    // join the room
+    socket.emit('joinRoom', { room: roomId });
 
     // cleanup on unmount
     return () => {
