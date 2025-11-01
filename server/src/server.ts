@@ -12,7 +12,14 @@ import {
   userLeave,
   getRoomUsers,
 } from './utils/users.js';
+import { connectDB } from './config/database.js';
+import Message from './models/Message.js';
+import moment from 'moment';
+
 dotenv.config();
+
+// connect to mongodb
+connectDB();
 
 const PORT = process.env.PORT || 3002;
 
@@ -56,7 +63,7 @@ app.get('/api', (req, res) => {
 io.on('connection', (socket) => {
   console.log('connection: User connected:', socket.id);
 
-  socket.on('joinRoom', ({ username, room }) => {
+  socket.on('joinRoom', async ({ username, room }) => {
     // validate input
     if (!username || !room) {
       socket.emit('error', { message: 'Username and room are required' });
@@ -70,6 +77,25 @@ io.on('connection', (socket) => {
 
     // welcome message to user
     socket.emit('message', formatMessage(botName, 'Welcome to Espresso Chat!'));
+
+    // load and send previous messages from database
+    try {
+      const messages = await Message.find({ roomId: user.room })
+        .sort({ timestamp: -1 })
+        .limit(50)
+        .exec();
+      
+      // send messages in chronological order
+      messages.reverse().forEach((msg) => {
+        socket.emit('message', {
+          username: msg.username,
+          text: msg.text,
+          time: moment(msg.timestamp).format('h:mm a'),
+        });
+      });
+    } catch (error) {
+      console.log('Error loading messages:', error);
+    }
 
     // broadcast to room that user joined
     socket.broadcast
@@ -87,7 +113,7 @@ io.on('connection', (socket) => {
   });
 
   // listen for chatMessage
-  socket.on('chatMessage', (msg) => {
+  socket.on('chatMessage', async (msg) => {
     const user = getCurrentUser(socket.id);
     
     if (!user) {
@@ -96,6 +122,18 @@ io.on('connection', (socket) => {
     }
 
     console.log('chatMessage:', JSON.stringify(user));
+    
+    // save message to database
+    try {
+      const newMessage = new Message({
+        roomId: user.room,
+        username: user.username,
+        text: msg,
+      });
+      await newMessage.save();
+    } catch (error) {
+      console.log('Error saving message:', error);
+    }
     
     // emit message to all users in the room
     io.to(user.room).emit('message', formatMessage(user.username, msg));
