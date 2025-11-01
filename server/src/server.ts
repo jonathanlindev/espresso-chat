@@ -123,7 +123,10 @@ io.on('connection', (socket) => {
 
     console.log('chatMessage:', JSON.stringify(user));
     
-    // save message to database
+    // emit message to all users in the room immediately
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
+    
+    // save message to database (async, don't block)
     try {
       const newMessage = new Message({
         roomId: user.room,
@@ -134,9 +137,6 @@ io.on('connection', (socket) => {
     } catch (error) {
       console.log('Error saving message:', error);
     }
-    
-    // emit message to all users in the room
-    io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
 
   // runs when client disconnects
