@@ -19,6 +19,7 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState('');
   const [users, setUsers] = useState<User[]>([]);
+  const [showCopied, setShowCopied] = useState(false);
   const socketRef = useRef<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -74,14 +75,46 @@ const ChatRoom = () => {
     navigate('/');
   };
 
+  const handleCopyLink = () => {
+  const roomLink = `${window.location.origin}/room/${roomId}`;
+  
+  navigator.clipboard.writeText(roomLink)
+    .then(() => {
+      // Show notification
+      setShowCopied(true);
+      
+      // Hide notification after 2.5 seconds
+      setTimeout(() => {
+        setShowCopied(false);
+      }, 2500);
+    })
+    .catch((err) => {
+      console.error('Failed to copy link:', err);
+      alert('Failed to copy link to clipboard');
+    });
+  };
+
   return (
     <div className='chat-container'>
       <header className='chat-header'>
         <h1>☕ Espresso Chat</h1>
-        <button className='btn' onClick={handleLeaveRoom}>
-          Leave Room
-        </button>
+        <div className='header-buttons'>
+          <button className='btn' onClick={handleCopyLink}>
+            Share Room Link
+          </button>
+          <button className='btn' onClick={handleLeaveRoom}>
+            Leave Room
+          </button>
+        </div>
       </header>
+
+      {/* Notification Toast */}
+      {showCopied && (
+      <div className='notification'>
+      ✓ Room link copied to clipboard!
+      </div>
+      )}
+
       <main className='chat-main'>
         <div className='chat-sidebar'>
           <h3>
